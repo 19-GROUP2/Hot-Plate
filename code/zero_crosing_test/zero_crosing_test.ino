@@ -6,6 +6,7 @@ int zeroPreState = 0;
 int tiracState = 0;
 int newCycle = 0;
 int angle = 5;
+unsigned long count = 0;
 unsigned long zeroNowTime = 0;
 unsigned long zeroPreTime = 0;
 unsigned long triacOnTime = 0;
@@ -18,8 +19,8 @@ void setup()
   pinMode(ZERO, INPUT);
   pinMode(SENSOR, INPUT);
   pinMode(TRIAC, OUTPUT);
-  Serial.begin(9600);
-  Serial.println("start");
+  // Serial.begin(9600);
+  // Serial.println("start");
 }
 
 void loop()
@@ -27,6 +28,11 @@ void loop()
   // put your main code here, to run repeatedly:
   updateTime();
   updateTriac();
+  if (count > 500)
+  {
+    count = 0;
+    angle = (angle + 1) % 10;
+  }
 }
 
 void updateTriac()
@@ -62,8 +68,9 @@ void updateTime()
     digitalWrite(TRIAC, tiracState);
     zeroNowTime = millis();
     T = zeroNowTime - zeroPreTime;
-    Serial.println(T);
+    // Serial.println(T);
     zeroPreState = zeroNowState;
     zeroPreTime = zeroNowTime;
+    count++;
   }
 }
