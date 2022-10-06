@@ -1,5 +1,5 @@
 {
     "board": "arduino:avr:uno",
-    "sketch": "zero_crosing_test\\zero_crosing_test.ino",
+    "sketch": "sensor.ino",
     "port": "COM5"
 }
