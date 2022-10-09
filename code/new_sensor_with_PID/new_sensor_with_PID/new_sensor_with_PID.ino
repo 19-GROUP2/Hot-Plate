@@ -10,6 +10,7 @@
 
 #include <OneWire.h>
 #include <DallasTemperature.h>
+// #include <math.h>
 
 // Data wire is plugged into port 2 on the Arduino
 #define ONE_WIRE_BUS 12
@@ -21,9 +22,9 @@ OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensor(&oneWire);
 
 // PID constant values
-float Kp=0, Kd=0;
-float pre_error=0;
-float scale=0;
+float Kp = 0, Kd = 0;
+float pre_error = 0;
+float scale = 0;
 
 int zeroPreState = 0;
 int tiracState = 0;
@@ -43,25 +44,30 @@ float getTmpReq()
 float getTmpNow()
 {
     // return (analogRead(SENSOR) - SENSOR_MIN) * 70.0 / (float)(SENSOR_MAX - SENSOR_MIN) + 30.0;
+
+    float tmpNow = sensor.getTempCByIndex(0);
     sensor.requestTemperatures();
-    return sensor.getTempCByIndex(0);
+    return tmpNow;
 }
 
-float PID(float target, float current){
-  float error = target - current;
+float PID(float target, float current)
+{
+    float error = target - current;
 
-  if (error<0){
-    return 0;
-  }
+    if (error < 0)
+    {
+        return 0;
+    }
 
-  else{
-    float P = error * Kp;
-    float D = (error - pre_error) * Kd;
+    else
+    {
+        float P = error * Kp;
+        float D = (error - pre_error) * Kd;
 
-    float correction = P + D;
-    pre_error = error;
-    return correction;
-  }
+        float correction = P + D;
+        pre_error = error;
+        return correction;
+    }
 }
 
 int calcAngle()
@@ -70,18 +76,22 @@ int calcAngle()
     float tmpNow = getTmpNow();
     float error = tmpReq - tmpNow;
 
-//    angle = (ERROR_MAX - error) * (float)T / ERROR_MAX;
-//    if (angle > T)
-//        angle = T;
-//    else if (angle < 0)
-//        angle = 0;
+    //    angle = (ERROR_MAX - error) * (float)T / ERROR_MAX;
+    //    if (angle > T)
+    //        angle = T;
+    //    else if (angle < 0)
+    //        angle = 0;
 
-    angle_correction = PID(tmpReq, tmpNow);
-    if (angle_correction==0) angle=T;
-    else{
-      angle = round(10-scale*correction);
-      if (angle<0) angle=0; //triac FULL ON
-      else if (angle>(T-1)) angle = T;  //triac OFF 
+    float angle_correction = PID(tmpReq, tmpNow);
+    if (angle_correction == 0)
+        angle = T;
+    else
+    {
+        angle = round(T - scale * angle_correction);
+        if (angle < 0)
+            angle = 0; // triac FULL ON
+        else if (angle > (T - 1))
+            angle = T; // triac OFF
     }
 
     // if ((millis() - count) > 500)
@@ -153,12 +163,16 @@ void setup()
     Serial.println("start");
 
     sensor.begin();
+    sensor.setResolution(9);
+    sensor.setWaitForConversion(false);
+    sensor.requestTemperatures(); // Send the command to get temperatures
+    delay(1000);
 }
 
 void loop()
 {
     updateTime();
-    if ((millis() - count) > 1000)
+    if ((millis() - count) > 2000)
     {
         count = millis();
         calcAngle();
