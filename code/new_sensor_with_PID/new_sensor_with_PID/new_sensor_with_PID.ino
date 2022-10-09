@@ -22,7 +22,7 @@ OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensor(&oneWire);
 
 // PID constant values
-float Kp = 0, Kd = 0;
+float Kp = 1, Kd = 0;
 float pre_error = 0;
 float scale = 0;
 
@@ -97,13 +97,13 @@ int calcAngle()
     // if ((millis() - count) > 500)
     // {
     //     count = millis();
-    Serial.print("R ");
-    Serial.println(tmpReq);
-    Serial.print("N ");
+//    Serial.print("R ");
+//    Serial.println(tmpReq);
+//    Serial.print("N ");
     Serial.println(tmpNow);
-    Serial.print("E ");
-    Serial.println(error);
-    Serial.print("A ");
+//    Serial.print("E ");
+//    Serial.println(error);
+//    Serial.print("A ");
     Serial.println(angle);
     // }
 
@@ -160,13 +160,18 @@ void setup()
     pinMode(TRIAC, OUTPUT);
 
     Serial.begin(9600);
-    Serial.println("start");
+//    Serial.println("start");
 
     sensor.begin();
     sensor.setResolution(9);
     sensor.setWaitForConversion(false);
     sensor.requestTemperatures(); // Send the command to get temperatures
     delay(1000);
+
+    float tmpInit = getTmpNow();
+    delay(1000);
+    float tmpReq = getTmpReq();
+    scale = 1/(tmpReq-tmpInit);
 }
 
 void loop()
