@@ -2,8 +2,8 @@
 #define SENSOR A0
 #define VR A1
 #define TRIAC 4
-#define SENSOR_MAX 745
-#define SENSOR_MIN 710
+#define SENSOR_MAX 794
+#define SENSOR_MIN 761
 // #define SENSOR_MAX 1023
 // #define SENSOR_MIN 0
 #define ERROR_MAX 50.0
@@ -11,7 +11,7 @@
 int zeroPreState = 0;
 int tiracState = 0;
 int newCycle = 0;
-int angle = 5;
+int angle = 0;
 unsigned long count = 0;
 unsigned long zeroNowTime = 0;
 unsigned long zeroPreTime = 0;
@@ -40,9 +40,9 @@ int calcAngle()
     else if (angle < 0)
         angle = 0;
 
-    if (count > 200)
+    if ((millis()-count) > 500)
     {
-        count = 0;
+        count = millis();
         Serial.print("R ");
         Serial.println(tmpReq);
         Serial.print("N ");
@@ -73,8 +73,7 @@ void updateTriac()
         {
             tiracState = 1;
             newCycle = 0;
-            if(angle>=T)
-              digitalWrite(TRIAC, tiracState);
+            digitalWrite(TRIAC, tiracState);
             triacOnTime = nowTime;
         }
     }
@@ -93,7 +92,7 @@ void updateTime()
         // Serial.println(T);
         zeroPreState = zeroNowState;
         zeroPreTime = zeroNowTime;
-        count++;
+        //count++;
     }
 }
 
@@ -111,10 +110,13 @@ void setup()
 
 void loop()
 {
-    // int angle = calcAngle();
-    // // Serial.println(angle);
-    // delay(200);
     updateTime();
-    calcAngle();
+    angle=T/2;
     updateTriac();
+    if ((millis()-count) > 500)
+    {
+      count = millis();       
+      Serial.println(analogRead(SENSOR));
+//      Serial.println(T);
+    }
 }
