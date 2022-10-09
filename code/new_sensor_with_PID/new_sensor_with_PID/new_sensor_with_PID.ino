@@ -22,7 +22,7 @@ OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensor(&oneWire);
 
 // PID constant values
-float Kp = 1, Kd = 0;
+float Kp = 2, Kd = 0.2;
 float pre_error = 0;
 float scale = 0;
 
@@ -171,7 +171,7 @@ void setup()
     float tmpInit = getTmpNow();
     delay(1000);
     float tmpReq = getTmpReq();
-    scale = 1/(tmpReq-tmpInit);
+    scale = 10/(tmpReq-tmpInit);
 }
 
 void loop()
