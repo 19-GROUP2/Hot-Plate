@@ -14,18 +14,22 @@ ser.close()
 ser.open()
 while True:
 
-    data = ser.readline()
+    data = list(map(float,ser.readline().decode()[:-2].split(',')))
+    req,now,err,ang=data
+    # print(data)
+   
 
-    print("val",data.decode())
-    
-    x.append(i)
-    y.append(data.decode())
+    print("Req Tmp: ",req)
+    print("Now Tmp: ",now)
+   
 
-    plt.scatter(i, float(data.decode()))
+    plt.scatter(i, now)
     i += 1
     plt.show()
     plt.pause(0.0001)  # Note this correction
 
-    print("ang",ser.readline().decode())
+    # print("ang",ser.readline().decode())
+    print("cur err:",err)
+    print("fir ang:",ang,'\n')
 
     

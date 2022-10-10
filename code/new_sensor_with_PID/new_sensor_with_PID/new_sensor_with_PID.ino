@@ -1,6 +1,6 @@
 #define ZERO 2
-#define SENSOR A0
-#define VR A1
+#define SENSOR A1
+#define VR A0
 #define TRIAC 4
 #define SENSOR_MAX 794
 #define SENSOR_MIN 761
@@ -13,7 +13,7 @@
 // #include <math.h>
 
 // Data wire is plugged into port 2 on the Arduino
-#define ONE_WIRE_BUS 12
+#define ONE_WIRE_BUS A1
 
 // Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
 OneWire oneWire(ONE_WIRE_BUS);
@@ -97,13 +97,25 @@ int calcAngle()
     // if ((millis() - count) > 500)
     // {
     //     count = millis();
-//    Serial.print("R ");
+
+    //demo
+//    Serial.print("Req T");
 //    Serial.println(tmpReq);
-//    Serial.print("N ");
-    Serial.println(tmpNow);
+//    Serial.print("Now T ");
+//    Serial.println(tmpNow);
+//
+//
 //    Serial.print("E ");
 //    Serial.println(error);
 //    Serial.print("A ");
+//    Serial.println(angle);
+    
+    Serial.print(tmpReq);
+    Serial.print(',');
+    Serial.print(tmpNow);
+    Serial.print(',');
+    Serial.print(error);
+    Serial.print(',');
     Serial.println(angle);
     // }
 
@@ -160,7 +172,7 @@ void setup()
     pinMode(TRIAC, OUTPUT);
 
     Serial.begin(9600);
-//    Serial.println("start");
+//    Serial.println("HotPlate Start");
 
     sensor.begin();
     sensor.setResolution(9);
