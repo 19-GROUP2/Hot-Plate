@@ -30,6 +30,6 @@ while True:
 
     # print("ang",ser.readline().decode())
     print("cur err:",err)
-    print("fir ang:",ang,'\n')
+    print("fir ang:",ang*18,'\n')
 
     
