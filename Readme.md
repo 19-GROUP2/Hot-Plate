@@ -21,7 +21,7 @@ The project’s objective is to build a temperature controller with PID using a 
 
 3. **Block Diagram** 
 
-<p align="center"><img src="imgs/Aspose.Words.1250abd3-8a4d-46a3-ad3e-a66d42addd51.003.jpeg" alt="Figure"></p>
+<p ><img src="imgs/Aspose.Words.1250abd3-8a4d-46a3-ad3e-a66d42addd51.003.jpeg" alt="Figure"></p>
 
 - A PID controller is used to control the temperature of the hot plate. 
 - A microcontroller with power electronics is used for this implementation. 
@@ -29,9 +29,9 @@ The project’s objective is to build a temperature controller with PID using a 
 
 *Zero Crossing Detector  Power Controller Unit*
 
-<p align="center"><img src="imgs/Aspose.Words.1250abd3-8a4d-46a3-ad3e-a66d42addd51.004.jpeg" alt="Figure"></p>
+<p ><img src="imgs/Aspose.Words.1250abd3-8a4d-46a3-ad3e-a66d42addd51.004.jpeg" alt="Figure"></p>
 
-<p align="center"><img src="imgs/Aspose.Words.1250abd3-8a4d-46a3-ad3e-a66d42addd51.005.jpeg" alt="Figure"></p>
+<p ><img src="imgs/Aspose.Words.1250abd3-8a4d-46a3-ad3e-a66d42addd51.005.jpeg" alt="Figure"></p>
 
 
 
