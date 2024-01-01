@@ -27,13 +27,10 @@ The project’s objective is to build a temperature controller with PID using a 
 - A microcontroller with power electronics is used for this implementation. 
 - A zero-crossing detector is used to sync the control signal with the supply waveform.  
 
-*Zero Crossing Detector  Power Controller Unit*
 
-<p ><img src="imgs/Aspose.Words.1250abd3-8a4d-46a3-ad3e-a66d42addd51.004.jpeg" alt="Figure"></p>
+4. **Circuit Diagram** 
 
-<p ><img src="imgs/Aspose.Words.1250abd3-8a4d-46a3-ad3e-a66d42addd51.005.jpeg" alt="Figure"></p>
-
-
+<p ><img src="imgs/cct.png" alt="Figure"></p>
 
 <pre>
 Group Members
